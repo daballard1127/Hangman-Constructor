@@ -1,12 +1,13 @@
 var inquirer = require('inquirer');
 var Word = require('./word.js');
+var Letter = require('./letter.js');
 
 var guessesRemaining = 10;
 var guessedLetters = [];
 var display = 0;
 var currentWord;
 
-startGame();
+
 
 function startGame() {
 
@@ -33,15 +34,15 @@ function startGame() {
 function newGame() {
     if (guessesRemaining === 10) {
         var wordFound = ['Casey', 'Denise', 'Casey jr', 'Christina', 'Victoria', 'Christian', 'Reece', 'Vera'];
-        var randNum = Math.floor(Math.random() * wordFound.length)
-        currentWord = new Word(wordFound[randNum])
-        currentWord.getLetters()
+        var randNum = Math.floor(Math.random() * wordFound.length);
+        currentWord = new Word(wordFound[randNum]);
+        currentWord.getLetters();
 
         // displays current word as blanks.
-        console.log('')
-        console.log(currentWord.wordDisplay())
-        console.log('')
-        promptUser()
+        console.log('');
+        console.log(currentWord.wordDisplay());
+        console.log('');
+        promptUser();
     } else {
         resetGuessesRemaining()
         newGame()
@@ -58,7 +59,7 @@ function promptUser() {
         type: 'input',
         message: 'Choose a letter',
         validate: function(value) {
-            if (isLetter(value)) {
+            if (Letter(value)) {
                 return true
             } else {
                 return false
@@ -86,10 +87,10 @@ function promptUser() {
             if (found === 0) {
                 console.log(' Wrong guess!')
 
-                guessesRemaining--
+                guessesRemaining--;
 
                 
-                display++
+                display++;
 
                 console.log('Guesses reamaining: ' + guessesRemaining)
                 console.log(hangManDisplay[display - 1]) 
@@ -129,4 +130,5 @@ function promptUser() {
             promptUser();
         }
     })
-}
+};
+startGame();

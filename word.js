@@ -1,54 +1,57 @@
 var Letter = require('./letter.js')
 
 function Word(wrd) {
-    this.word = wrd
-    this.letters = []
-    this.wordFound = false
+    this.word = wrd;
+    this.letters = [];
+    this.wordFound = false;
 
     // gets letters and pushes to letters array
-    this.getLetters = function () {
+    this.getLetters = function (word) {
         for (var i = 0; i < this.word.length; i++) {
-            var newLetter = new Letter(this.word[i]);
-            this.letters.push(newLetter);
+            
+            this.letters.push(new letters.Letter(this.word[i]));
         }
-    }
+    };
 
     // checks to see if user found the current word
     this.checkWord = function () {
-        if (this.letters.every(function (lttr) {
-            return lttr.appear === true;
-        })) {
-            this.wordFound = true;
-            return true;
+        var count = 0;
+        for (var i = 0; i < this.letters.length; i++) {
+            if (this.letters[i].appear) {
+                count++;
+            }
         }
-    }
+        if (count === this.letters.length) {
+            this.found = true;
+        }
+        return this.found;
+    };
 
     
     this.checkIfLetterFound = function (guessedLetter) {
         var returnLetter = 0
 
         
-        this.letters.forEach(function (lttr) {
-            if (lttr.letter === guessedLetter) {
-                lttr.display = true
+        for (var i = 0; i < this.letters.length; i++) {
+            if (this.letters[i].charac === guessedLetter) {
+                this.letters[i].appear = true;
                 returnLetter++
             }
-        })
-
+        };
         
         return returnLetter;
-    }
+    };
 
     this.wordDisplay = function () {
-        var display = ''
+        var display = "";
+        
+        for (var i = 0; i < this.letters.length; i++) {
+            display += this.letters[i].letterDisplay();
+        }
         
         
-        this.letters.forEach(function (lttr) {
-            var currentLetter = lttr.letterDisplay()
-            display += currentLetter
-        })
-        return display
-    }
-}
+        return display;
+    };
+};
 
 module.exports = Word
